@@ -1,4 +1,4 @@
-from utils.system_info import get_system_info
+from optimizer.system_info import get_system_info
 
 info = get_system_info()
 print("Стан системи:")
