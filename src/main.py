@@ -1,3 +1,4 @@
+from optimizer.system_cleaner import clean_temp_files
 import sys
 from pathlib import Path
 
@@ -31,3 +32,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+print("\n=== SYSTEM CLEANER ===")
+clean_result = clean_temp_files()
+
+print("Removed TEMP files:", clean_result["temp_removed"])
+print("Removed Windows Temp:", clean_result["windows_temp_removed"])
+print("Removed Chrome Cache:", clean_result["chrome_cache_removed"])

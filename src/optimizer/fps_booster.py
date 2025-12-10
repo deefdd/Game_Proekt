@@ -67,7 +67,6 @@ def kill_background_processes(excluded_processes=None):
 def clear_ram():
 
     before = psutil.virtual_memory().used
-    # тут ми не робимо нічого магічного — просто повторно читаємо стан
     psutil.virtual_memory()
     after = psutil.virtual_memory().used
 
