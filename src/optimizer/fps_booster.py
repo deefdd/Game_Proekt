@@ -1,9 +1,7 @@
 import psutil
 
-# Процеси, які часто жруть ресурси
 UNNECESSARY_PROCESSES = [
     "OneDrive.exe",
-    "steamwebhelper.exe",
     "EpicWebHelper.exe",
     "Telegram.exe",
     "firefox.exe",
