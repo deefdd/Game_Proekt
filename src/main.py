@@ -1,7 +1,10 @@
+
+
+
 import sys
 from pathlib import Path
 
-# Add src directory to Python path (if needed)
+
 BASE_DIR = Path(__file__).resolve().parent
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
@@ -10,7 +13,16 @@ from optimizer.system_info import get_system_info
 from optimizer.fps_booster import boost_fps
 from optimizer.system_cleaner import clean_temp_files
 from optimizer.advanced_cleaner import advanced_cleaner
+from utils.logger import log, log_error, cleanup_old_logs
 
+from utils.logger import log
+
+
+def main():
+    log("main", "Program started")
+    cleanup_old_logs(7)
+import time
+start_time = time.time()
 
 def main():
     # --- SYSTEM INFO ---
@@ -52,3 +64,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+duration = round(time.time() - start_time, 2)
+log("main", f"Program finished successfully in {duration} seconds")
+
+

@@ -2,6 +2,9 @@ import psutil
 import platform
 import GPUtil
 
+from utils.logger import log
+
+
 def get_system_info():
     info = {
         "CPU": platform.processor(),
@@ -22,5 +25,7 @@ def get_system_info():
         info["GPU VRAM Used (GB)"] = round(gpu.memoryUsed / 1024, 2)
     else:
         info["GPU"] = "Not detected"
+
+    log("system_info", f"System info collected: {info}")
 
     return info

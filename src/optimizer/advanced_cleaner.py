@@ -1,6 +1,7 @@
 import os
 import shutil
 from pathlib import Path
+from utils.logger import log
 
 # Paths for advanced cleaning
 PREFETCH_PATH = Path("C:/Windows/Prefetch")
@@ -12,6 +13,7 @@ LOCAL_APPDATA = os.getenv("LOCALAPPDATA") or ""
 NVIDIA_DXCACHE = Path(LOCAL_APPDATA) / "NVIDIA" / "DXCache"
 NVIDIA_GLCACHE = Path(LOCAL_APPDATA) / "NVIDIA" / "GLCache"
 AMD_SHADER_CACHE = Path(LOCAL_APPDATA) / "AMD" / "DxCache"
+
 
 
 def safe_delete(path: Path) -> int:
@@ -46,6 +48,7 @@ def safe_delete(path: Path) -> int:
 def advanced_cleaner() -> dict:
     """
     Cleans: Prefetch, Shader Cache (NVIDIA/AMD), Windows Update Cache.
+    Logs results to logs/advanced_cleaner.log
     """
     removed_prefetch = safe_delete(PREFETCH_PATH)
     removed_update_cache = safe_delete(WINDOWS_UPDATE_CACHE)
@@ -55,6 +58,11 @@ def advanced_cleaner() -> dict:
     removed_amd_cache = safe_delete(AMD_SHADER_CACHE)
 
     shader_removed = removed_nvidia_dx + removed_nvidia_gl + removed_amd_cache
+
+    # logging here – we have access to all counters
+    log("advanced_cleaner", f"Prefetch removed: {removed_prefetch}")
+    log("advanced_cleaner", f"Shader cache removed: {shader_removed}")
+    log("advanced_cleaner", f"Update cache removed: {removed_update_cache}")
 
     return {
         "prefetch_removed": removed_prefetch,

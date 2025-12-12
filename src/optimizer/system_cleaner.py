@@ -1,6 +1,7 @@
 import os
 import shutil
 from pathlib import Path
+from utils.logger import log
 
 # Paths to clean
 TEMP_PATH = Path(os.getenv("TEMP"))
@@ -53,6 +54,11 @@ def clean_temp_files() -> dict:
     removed_temp = delete_in_directory(TEMP_PATH)
     removed_windows_temp = delete_in_directory(WINDOWS_TEMP_PATH)
     removed_chrome = delete_in_directory(CHROME_CACHE_PATH)
+
+    # 🔹 Logging here – we have proper variable names
+    log("cleaner", f"Removed TEMP: {removed_temp}")
+    log("cleaner", f"Removed Windows Temp: {removed_windows_temp}")
+    log("cleaner", f"Removed Chrome Cache: {removed_chrome}")
 
     return {
         "temp_removed": removed_temp,

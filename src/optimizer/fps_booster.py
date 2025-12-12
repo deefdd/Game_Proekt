@@ -1,4 +1,6 @@
 import psutil
+from utils.logger import log
+
 
 UNNECESSARY_PROCESSES = [
     "OneDrive.exe",
@@ -35,6 +37,7 @@ DEFAULT_EXCLUDED_PROCESSES = [
 ]
 
 
+
 def kill_background_processes(excluded_processes=None):
 
     if excluded_processes is None:
@@ -59,7 +62,9 @@ def kill_background_processes(excluded_processes=None):
             except (psutil.NoSuchProcess, psutil.AccessDenied):
                 pass
 
+    log("fps_booster", f"Killed processes: {killed}")
     return killed
+
 
 
 def clear_ram():
@@ -80,3 +85,4 @@ def boost_fps(excluded_processes=None):
         "killed_processes": killed,
         "freed_ram_mb": freed_ram
     }
+
