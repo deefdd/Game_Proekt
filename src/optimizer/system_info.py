@@ -2,7 +2,8 @@ import psutil
 import platform
 import GPUtil
 
-from utils.logger import log
+from src.utils.logger import log
+
 
 
 def get_system_info():

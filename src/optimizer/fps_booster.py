@@ -1,5 +1,6 @@
 import psutil
-from utils.logger import log
+from src.utils.logger import log
+
 
 
 UNNECESSARY_PROCESSES = [

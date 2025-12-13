@@ -1,7 +1,8 @@
 import os
 import shutil
 from pathlib import Path
-from utils.logger import log
+from src.utils.logger import log
+
 
 # Paths for advanced cleaning
 PREFETCH_PATH = Path("C:/Windows/Prefetch")
