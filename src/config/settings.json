@@ -1,0 +1,24 @@
+{
+    "excluded_processes": [
+        "Discord.exe",
+        "chrome.exe",
+        "Steam.exe"
+    ],
+
+    "cleaner": {
+        "remove_temp": true,
+        "remove_windows_temp": true,
+        "remove_chrome_cache": true,
+        "remove_prefetch": true,
+        "remove_shader_cache": true,
+        "remove_windows_update_cache": true
+    },
+
+    "logging": {
+        "save_main_log": true,
+        "save_cleaner_log": true,
+        "save_fps_log": true,
+        "save_system_info_log": true,
+        "auto_cleanup_days": 7
+    }
+}

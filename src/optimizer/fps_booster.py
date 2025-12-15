@@ -1,5 +1,7 @@
 import psutil
 from src.utils.logger import log
+from src.config import settings
+
 
 
 
@@ -31,11 +33,9 @@ UNNECESSARY_PROCESSES = [
 ]
 
 
-DEFAULT_EXCLUDED_PROCESSES = [
-    "discord.exe",
-    "discorddevelopment.exe",
-    "Chrome.exe",
-]
+
+
+DEFAULT_EXCLUDED_PROCESSES = settings["excluded_processes"]
 
 
 

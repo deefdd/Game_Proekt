@@ -2,6 +2,9 @@ import os
 import shutil
 from pathlib import Path
 from src.utils.logger import log
+from src.config import settings   
+
+
 
 
 # Paths to clean
@@ -49,14 +52,19 @@ def delete_in_directory(path: Path) -> int:
 
 
 def clean_temp_files() -> dict:
-    """
-    Cleans Windows temp directories and Chrome cache.
-    """
-    removed_temp = delete_in_directory(TEMP_PATH)
-    removed_windows_temp = delete_in_directory(WINDOWS_TEMP_PATH)
-    removed_chrome = delete_in_directory(CHROME_CACHE_PATH)
+    removed_temp = 0
+    removed_windows_temp = 0
+    removed_chrome = 0
 
-    # 🔹 Logging here – we have proper variable names
+    if settings["cleaner"]["remove_temp"]:
+        removed_temp = delete_in_directory(TEMP_PATH)
+
+    if settings["cleaner"]["remove_windows_temp"]:
+        removed_windows_temp = delete_in_directory(WINDOWS_TEMP_PATH)
+
+    if settings["cleaner"]["remove_chrome_cache"]:
+        removed_chrome = delete_in_directory(CHROME_CACHE_PATH)
+
     log("cleaner", f"Removed TEMP: {removed_temp}")
     log("cleaner", f"Removed Windows Temp: {removed_windows_temp}")
     log("cleaner", f"Removed Chrome Cache: {removed_chrome}")
