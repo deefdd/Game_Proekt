@@ -1,0 +1,35 @@
+{
+  "features": {
+    "show_system_info": true,
+    "boost_fps": true,
+    "clean_temp": true,
+    "advanced_clean": true
+  },
+
+  "fps_booster": {
+    "excluded_processes": [
+      "Discord.exe",
+      "chrome.exe"
+    ]
+  },
+
+  "cleaner": {
+    "remove_temp": true,
+    "remove_windows_temp": true,
+    "remove_chrome_cache": true
+  },
+
+  "advanced_cleaner": {
+    "remove_prefetch": true,
+    "remove_shader_cache": true,
+    "remove_windows_update_cache": true
+  },
+
+  "logging": {
+    "save_main_log": true,
+    "save_cleaner_log": true,
+    "save_fps_log": true,
+    "save_system_info_log": true,
+    "auto_cleanup_days": 7
+  }
+}

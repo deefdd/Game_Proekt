@@ -39,9 +39,10 @@ def main() -> None:
     if features.get("advanced_clean", True):
         print("\n=== ADVANCED CLEANER ===")
         adv = advanced_cleaner()
-        print(f"Removed Prefetch: {adv['prefetch_removed']}")
-        print(f"Removed Shader Cache: {adv['shader_cache_removed']}")
-        print(f"Removed Windows Update Cache: {adv['update_cache_removed']}")
+        print(f"Removed Prefetch: {adv.get('prefetch_removed', 0)}")
+        print(f"Removed Shader Cache: {adv.get('shader_cache_removed', 0)}")
+        print(f"Removed Windows Update Cache: {adv.get('update_cache_removed', 0)}")
+
 
     # --- LOG: finish ---
     log("main", "Program finished successfully")

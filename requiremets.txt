@@ -1,1 +1,3 @@
 psutil
+GPUtil
+pyinstaller --onefile --name Game_Proekt -m src.main

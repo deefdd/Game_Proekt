@@ -72,5 +72,5 @@ def advanced_cleaner() -> dict:
     return {
         "prefetch_removed": removed_prefetch,
         "shader_cache_removed": removed_shader_cache,
-        "update_cache_removed": removed_update_cache,
+        "update_cache_removed": removed_update_cache
     }
