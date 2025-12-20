@@ -1,4 +1,12 @@
 {
+  "safe_mode": { 
+    "enabled": false 
+},
+
+  "menu": {
+    "enabled": true, "pause_after_action": true
+  },
+
   "features": {
     "show_system_info": true,
     "boost_fps": true,
