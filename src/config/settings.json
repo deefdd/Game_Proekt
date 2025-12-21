@@ -1,4 +1,8 @@
 {
+  "ux": {
+  "confirm_dangerous_actions": true,
+  "dry_run": false
+  },
   "safe_mode": { 
     "enabled": false 
 },
