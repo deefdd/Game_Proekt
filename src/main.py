@@ -6,6 +6,8 @@ from src.optimizer.fps_booster import boost_fps
 from src.optimizer.system_cleaner import clean_temp_files
 from src.optimizer.advanced_cleaner import advanced_cleaner
 
+from src.profiles import list_profiles, load_profile, deep_update
+
 
 def _pause_if_needed() -> None:
     if settings.get("menu", {}).get("pause_after_action", True):
@@ -24,8 +26,19 @@ def _confirm(msg: str) -> bool:
     # якщо confirm вимкнений — завжди дозволяємо
     if not settings.get("ux", {}).get("confirm_dangerous_actions", True):
         return True
+
     ans = input(f"{msg} (y/n): ").strip().lower()
-    return ans == "y"
+
+    yes = {"y", "yes", "yeah", "ok", "yep", "д", "да", "так", "т"}
+    no = {"n", "no", "nope", "н", "ні", "нет"}
+
+    if ans in yes:
+        return True
+    if ans in no:
+        return False
+
+    print("Please type y/n (або так/ні).")
+    return False
 
 
 def _print_system_info() -> None:
@@ -37,14 +50,18 @@ def _print_system_info() -> None:
 
 def _run_fps_booster() -> None:
     print("\n=== FPS BOOSTER ===")
+
     if _safe_mode_enabled():
         print("⚠ Safe Mode enabled: skipping FPS Booster.")
         return
 
-    if not _confirm("This may close background apps. Continue?"):
-        print("Cancelled.")
-        return
+    # 12.1: у Dry-Run не питаємо confirm (бо це preview режим)
+    if not _dry_run_enabled():
+        if not _confirm("This may close background apps. Continue?"):
+            print("Cancelled.")
+            return
 
+    # Примітка: сам fps_booster поки що НЕ dry-run, він реально вбиває процеси.
     res = boost_fps()
     print(f"Killed processes: {res.get('killed_processes', [])}")
     print(f"Freed RAM: {res.get('freed_ram_mb', 0.0)} MB")
@@ -52,8 +69,7 @@ def _run_fps_booster() -> None:
 
 def _run_cleaner() -> None:
     print("\n=== SYSTEM CLEANER ===")
-    dry = _dry_run_enabled()
-    if dry:
+    if _dry_run_enabled():
         print("🟡 DRY-RUN: preview only (no files will be deleted).")
 
     res = clean_temp_files()
@@ -64,22 +80,45 @@ def _run_cleaner() -> None:
 
 def _run_advanced_cleaner() -> None:
     print("\n=== ADVANCED CLEANER ===")
+
     if _safe_mode_enabled():
         print("⚠ Safe Mode enabled: skipping Advanced Cleaner.")
         return
 
-    if not _confirm("This will delete cache files. Continue?"):
-        print("Cancelled.")
-        return
+    # 12.1: у Dry-Run не питаємо confirm (бо це preview режим)
+    if not _dry_run_enabled():
+        if not _confirm("This will delete cache files. Continue?"):
+            print("Cancelled.")
+            return
 
-    dry = _dry_run_enabled()
-    if dry:
+    if _dry_run_enabled():
         print("🟡 DRY-RUN: preview only (no files will be deleted).")
 
     adv = advanced_cleaner()
     print(f"Removed Prefetch: {adv.get('prefetch_removed', 0)}")
     print(f"Removed Shader Cache: {adv.get('shader_cache_removed', 0)}")
     print(f"Removed Windows Update Cache: {adv.get('update_cache_removed', 0)}")
+
+
+def _apply_profile_from_menu() -> None:
+    names = list_profiles()
+    if not names:
+        print("No profiles found in ./profiles")
+        return
+
+    print("\nAvailable profiles:")
+    for i, n in enumerate(names, 1):
+        print(f"{i}) {n}")
+
+    pick = input("Select profile number: ").strip()
+    if not pick.isdigit() or not (1 <= int(pick) <= len(names)):
+        print("Cancelled.")
+        return
+
+    profile_name = names[int(pick) - 1]
+    patch = load_profile(profile_name)
+    deep_update(settings, patch)  # застосували профіль “на льоту”
+    print(f"✅ Profile applied: {profile_name}")
 
 
 def run_all() -> None:
@@ -103,6 +142,7 @@ def menu_loop() -> None:
         print("6) Reload settings.json")
         print(f"7) Toggle Safe Mode (currently: {safe})")
         print(f"8) Toggle Dry-Run (currently: {dry})")
+        print("9) Select game profile")
         print("0) Exit")
 
         choice = input("Select: ").strip()
@@ -147,6 +187,10 @@ def menu_loop() -> None:
                 settings["ux"] = {}
             settings["ux"]["dry_run"] = not bool(settings["ux"].get("dry_run", False))
             print(f"✅ Dry-Run is now: {settings['ux']['dry_run']}")
+            _pause_if_needed()
+
+        elif choice == "9":
+            _apply_profile_from_menu()
             _pause_if_needed()
 
         else:

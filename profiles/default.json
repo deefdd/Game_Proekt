@@ -1,0 +1,8 @@
+{
+  "fps_booster": {
+    "excluded_processes": ["Discord.exe", "chrome.exe"]
+  },
+  "cleaner": {
+    "remove_chrome_cache": true
+  }
+}
