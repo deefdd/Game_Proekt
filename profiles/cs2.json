@@ -1,0 +1,8 @@
+{
+  "fps_booster": {
+    "excluded_processes": ["Discord.exe", "steam.exe", "cs2.exe"]
+  },
+  "advanced_cleaner": {
+    "remove_windows_update_cache": false
+  }
+}
