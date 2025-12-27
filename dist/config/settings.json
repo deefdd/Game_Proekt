@@ -20,9 +20,10 @@
   },
 
   "fps_booster": {
-    "excluded_processes": [
-      "Discord.exe",
-      "chrome.exe"
+    "excluded_processes": ["Discord.exe", "chrome.exe"],
+    "never_kill": [
+      "explorer.exe", "csrss.exe", "wininit.exe", "services.exe", "lsass.exe",
+      "svchost.exe", "smss.exe", "system", "registry", "winlogon.exe", "dwm.exe"
     ]
   },
 
